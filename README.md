@@ -4,7 +4,7 @@ by Andrew Casper and Harry Cogswell
 March 31, 2020
 
 ## Description
-![Image](assets/ERD.PNG)
+![Image](assets/ERD.png)
 
 ### Tables
 - __Locations__ has all the information for each hotel location. This includes a location ID, its *primary key*, the Name of the location, the city, state, and address, as well as a phone number and the number of rooms it has.
