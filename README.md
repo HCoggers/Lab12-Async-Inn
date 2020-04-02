@@ -13,4 +13,4 @@ April 1st, 2020
 - __RoomType__ is a table of our room layouts. It has a *primary key* ID, a room type, as well as a number of beds that defines the room type.
 - __Pricing__ is based solely on the location and the room number. It has a price field to denote how much a room costs.
 
-*AsyncInnAPI v2.0*
+*AsyncInnAPI v0.2*
