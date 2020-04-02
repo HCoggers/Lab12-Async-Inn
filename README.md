@@ -7,10 +7,10 @@ April 1st, 2020
 ![Image](assets/AsyncInn2.png)
 
 ### Tables
-- __Locations__ has all the information for each hotel location. This includes a location ID, its *primary key*, the Name of the location, the city, state, and address, as well as a phone number and the number of rooms it has.
-- __Rooms__ has all the information about each individual room. This includes a *primary key* ID, the hotel location ID, the room number, its unique nickname, the room type, the amenities, and whether or not the room is pet-friendly.
-- __Amenities__  is a table of our offered amenities, it includes a *primary key* ID , as well as a room type that it's used in.
-- __RoomType__ is a table of our room layouts. It has a *primary key* ID, a room type, as well as a number of beds that defines the room type.
-- __Pricing__ is based solely on the location and the room number. It has a price field to denote how much a room costs.
+- __Hotel__ has all the information for each hotel location. This includes an ID as its integer *primary key*, the Name of the location, the city, state, and address of location, as well as a phone number, all of which are nvarchars. It also references the HotelRoom table as a navigation property.
+- __Room__ has the information for the different room designs, with an integer *primary key* ID, a Name nvarchar to represent the each nickname, and an int enum layout which distinguishes between a studio, single bedroom, or double bedroom layout. This table also references the HotelRoom and RoomAmenities join tables as navigation properties.
+- __Amenities__  is a table of offered amenities, it includes an integer *primary key* ID , as well as the name of the amenity as an nvarchar. It has a reference to the RoomAmenities table as a navigation property.
+- __HotelRoom__ is a join table that has all the information about each individual room. It has a composite key of the HotelID from the Hotel table and a RoomNumber integer value. It also has the RoomID from the Room table as a foreign key. As payload values, it has the rate of the room as a decimal, and whether or not the room is pet-friendly as a bit. As navigation properties, it has the Room and Hotel tables.
+- __RoomAmenities__ is the join table combining room designs and amenities. It has the AmenitiesID and RoomID values as composite and foreign keys, and navigation properties to the Amenities and Room tables.
 
 *AsyncInnAPI v0.2*
