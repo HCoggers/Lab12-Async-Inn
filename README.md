@@ -1,10 +1,10 @@
 # Lab13-Async-Inn
 API Server for a Hotel Asset Management System
 by Andrew Casper and Harry Cogswell
-March 31, 2020
+April 1st, 2020
 
 ## Description
-![Image](assets/ERD.png)
+![Image](assets/ERDiagram.png)
 
 ### Tables
 - __Locations__ has all the information for each hotel location. This includes a location ID, its *primary key*, the Name of the location, the city, state, and address, as well as a phone number and the number of rooms it has.
@@ -13,4 +13,4 @@ March 31, 2020
 - __RoomType__ is a table of our room layouts. It has a *primary key* ID, a room type, as well as a number of beds that defines the room type.
 - __Pricing__ is based solely on the location and the room number. It has a price field to denote how much a room costs.
 
-*AsyncInnAPI v1.0*
+*AsyncInnAPI v2.0*
