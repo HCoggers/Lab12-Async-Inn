@@ -1,4 +1,4 @@
-# Lab12-Async-Inn
+# Lab13-Async-Inn
 API Server for a Hotel Asset Management System
 by Andrew Casper and Harry Cogswell
 March 31, 2020
