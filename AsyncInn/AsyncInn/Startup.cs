@@ -17,6 +17,10 @@ namespace AsyncInn
     {
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Startup constructor called by CLR
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
