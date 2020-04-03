@@ -13,4 +13,7 @@ April 1st, 2020
 - __HotelRoom__ is a join table that has all the information about each individual room. It has a composite key of the HotelID from the Hotel table and a RoomNumber integer value. It also has the RoomID from the Room table as a foreign key. As payload values, it has the rate of the room as a decimal, and whether or not the room is pet-friendly as a bit. As navigation properties, it has the Room and Hotel tables.
 - __RoomAmenities__ is the join table combining room designs and amenities. It has the AmenitiesID and RoomID values as composite and foreign keys, and navigation properties to the Amenities and Room tables.
 
+### Relationships
+- Our core tables are Hotel, Room, and Amenities. Those three tables are related to each other by our join tables, HotelRoom and RoomAmenities, and have navigation properties to those tables. The join tables use the primary keys from the three core tables as composite keys. They also have navigation links back to the core tables.
+
 *AsyncInnAPI v0.2*
