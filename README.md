@@ -1,7 +1,6 @@
 # Lab13-Async-Inn
 *API Server for a Hotel Asset Management System*  
-*by Andrew Casper and Harry Cogswell*  
-__*April 5<sup>th</sup>, 2020*__
+*by Andrew Casper and Harry Cogswell | April 5<sup>th</sup>, 2020*
 
 ## Description
 An API Server developed for the Async Inn, which can return various information from a database of the Inn's locations, room layouts, and amenities. This API Server is still in development, and not readily available to the public, however, if you would like to test out our end points in the server's current state, simply clone this repo on to your local machine, and follow [these](#Directions) instructions:
