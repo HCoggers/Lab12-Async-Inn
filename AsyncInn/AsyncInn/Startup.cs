@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AsyncInn.Data;
+using AsyncInn.Models.Interfaces;
+using AsyncInn.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,9 +20,8 @@ namespace AsyncInn
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// Startup constructor called by CLR
+        /// Startup Constructor called by CLR
         /// </summary>
-        /// <param name="configuration"></param>
         public Startup()
         {
             var builder = new ConfigurationBuilder().AddEnvironmentVariables();
@@ -35,6 +36,12 @@ namespace AsyncInn
             services.AddMvc();
 
             services.AddDbContext<AsyncInnDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // route mappings
+                services.AddTransient<IHotelManager, HotelService>();
+                services.AddTransient<IHotelRoomManager, HotelRoomService>();
+                services.AddTransient<IRoomManager, RoomService>();
+                services.AddTransient<IAmenitiesManager, AmenitiesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +56,7 @@ namespace AsyncInn
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{ controller = Home }/{ action = Index }/{id?}");
+                endpoints.MapControllerRoute("default", "{ controller = Home }/{ action = Index }/{id?}/{id2?}");
             });
         }
     }
