@@ -21,59 +21,6 @@ namespace AsyncInn.Controllers
             _context = context;
         }
 
-        // GET: api/RoomAmenities
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<RoomAmenities>>> GetRoomAmenities()
-        {
-            return await _context.RoomAmenities.ToListAsync();
-        }
-
-        // GET: api/RoomAmenities/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RoomAmenities>> GetRoomAmenities(int id)
-        {
-            var roomAmenities = await _context.RoomAmenities.FindAsync(id);
-
-            if (roomAmenities == null)
-            {
-                return NotFound();
-            }
-
-            return roomAmenities;
-        }
-
-        // PUT: api/RoomAmenities/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoomAmenities(int id, RoomAmenities roomAmenities)
-        {
-            if (id != roomAmenities.AmenitiesID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(roomAmenities).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoomAmenitiesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/RoomAmenities
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
