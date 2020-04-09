@@ -11,10 +11,12 @@ namespace AsyncInn.Models.Services
     public class RoomService : IRoomManager
     {
         private readonly AsyncInnDbContext _context;
+        private readonly IAmenitiesManager _amenities;
 
-        public RoomService(AsyncInnDbContext context)
+        public RoomService(AsyncInnDbContext context, IAmenitiesManager amenities)
         {
             _context = context;
+            _amenities = amenities;
         }
 
         public async Task CreateRoom(Room room)
@@ -34,6 +36,7 @@ namespace AsyncInn.Models.Services
         public async Task<Room> GetRoom(int id)
         {
             var room = await _context.Rooms.FindAsync(id);
+            
             return room;
         }
 
@@ -48,5 +51,18 @@ namespace AsyncInn.Models.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<RoomAmenities>> GetRoomAmenities(int roomId)
+        {
+            var roomAmenities = await _context.RoomAmenities.Where(roomAmenity => roomAmenity.RoomID == roomId)
+                .ToListAsync();
+            foreach (var roomAmenity in roomAmenities)
+            {
+                // For each roomAmenity, set roomAmenity.Amenities roomAmenity.AmmenityID to the matching amenity from the amenities table.
+                roomAmenity.Amenities = await _context.Amenities.FindAsync(roomAmenity.AmenitiesID);
+            }
+            return roomAmenities;
+        }
+
     }
 }
