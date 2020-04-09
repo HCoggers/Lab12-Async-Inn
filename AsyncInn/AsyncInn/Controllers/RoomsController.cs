@@ -40,6 +40,8 @@ namespace AsyncInn.Controllers
                 return NotFound();
             }
 
+            room.RoomAmenities = await _room.GetRoomAmenities(id);
+
             return room;
         }
 

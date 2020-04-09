@@ -37,6 +37,10 @@ namespace AsyncInn
 
             services.AddDbContext<AsyncInnDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             // route mappings
                 services.AddTransient<IHotelManager, HotelService>();
                 services.AddTransient<IHotelRoomManager, HotelRoomService>();

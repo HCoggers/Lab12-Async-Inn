@@ -49,9 +49,10 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        private bool HotelExists(int id)
+        public async Task<List<HotelRoom>> GetHotelRooms(int hotelId)
         {
-            return _context.Hotels.Any(e => e.ID == id);
+            var hotelRooms = await _context.HotelRooms.Where(hotelRoom => hotelRoom.HotelID == hotelId).ToListAsync();
+            return hotelRooms;
         }
     }
 }
