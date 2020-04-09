@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsyncInn.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,8 +12,8 @@ namespace AsyncInn.Models.Interfaces
         public Task CreateAmenities(Amenities amenities);
 
         // READ
-        public Task<Amenities> GetAmenities(int id);
-        public Task<List<Amenities>> GetAllAmenities();
+        public Task<AmenitiesDTO> GetAmenities(int id);
+        public Task<List<AmenitiesDTO>> GetAllAmenities();
 
         // UPDATE
         public Task UpdateAmenities(Amenities amenities, int id);

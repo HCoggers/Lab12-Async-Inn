@@ -34,7 +34,7 @@ namespace AsyncInn.Controllers
             }
             catch (DbUpdateException)
             {
-                if (RoomAmenitiesExists(roomAmenities.AmenitiesID))
+                if (RoomAmenitiesExists(roomAmenities.AmenitiesID, roomAmenities.RoomID))
                 {
                     return Conflict();
                 }
@@ -63,9 +63,9 @@ namespace AsyncInn.Controllers
             return roomAmenities;
         }
 
-        private bool RoomAmenitiesExists(int id)
+        private bool RoomAmenitiesExists(int amenitiesId, int roomId)
         {
-            return _context.RoomAmenities.Any(e => e.AmenitiesID == id);
+            return _context.RoomAmenities.Any(e => e.AmenitiesID == amenitiesId && e.RoomID == roomId);
         }
     }
 }
