@@ -22,7 +22,7 @@ namespace AsyncInn.Models.Interfaces
         public Task DeleteRoom(int id);
 
         // GET ROOM AMENITIES
-        public Task<List<RoomAmenities>> GetRoomAmenities(int roomId);
+        public Task<List<Amenities>> GetRoomAmenities(int roomId);
 
     }
 }

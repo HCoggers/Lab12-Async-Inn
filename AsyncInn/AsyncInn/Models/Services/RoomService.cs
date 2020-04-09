@@ -38,16 +38,16 @@ namespace AsyncInn.Models.Services
         {
             var room = await _context.Rooms.FindAsync(id);
 
-            var roomAmenities = await _amenities.GetAmenities(room.ID);
+            var roomAmenities = await GetRoomAmenities(room.ID);
             List<AmenitiesDTO> amenityDTOs = new List<AmenitiesDTO>();
             if (roomAmenities != null)
             {
-                foreach (var RoomAmenity in room.RoomAmenities)
+                foreach (var RoomAmenity in roomAmenities)
                 {
                     var AmenityDTO = new AmenitiesDTO
                     {
-                        ID = RoomAmenity.AmenitiesID,
-                        Name = "TESTNAME"
+                        ID = RoomAmenity.ID,
+                        Name = RoomAmenity.Name
                     };
                     amenityDTOs.Add(AmenityDTO);
                 }
@@ -103,15 +103,12 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<RoomAmenities>> GetRoomAmenities(int roomId)
+        public async Task<List<Amenities>> GetRoomAmenities(int roomId)
         {
             var roomAmenities = await _context.RoomAmenities.Where(roomAmenity => roomAmenity.RoomID == roomId)
+                .Include(roomAmenity => roomAmenity.Amenities)
+                .Select(amenity => amenity.Amenities)
                 .ToListAsync();
-            foreach (var roomAmenity in roomAmenities)
-            {
-                // For each roomAmenity, set roomAmenity.Amenities roomAmenity.AmmenityID to the matching amenity from the amenities table.
-                roomAmenity.Amenities = await _context.Amenities.FindAsync(roomAmenity.AmenitiesID);
-            }
             return roomAmenities;
         }
 

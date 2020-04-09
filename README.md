@@ -7,7 +7,7 @@ An API Server developed for the Async Inn, which can return various information 
 
 > *Server testing using Postman*
 #### Lab 17
-![Lab 17 Rooms in action (not working)](assets/Lab17InActionRooms.png)
+![Lab 17 Rooms in action](assets/Lab17InActionHotels.png)
 
 #### Lab 16
 ![Lab 16 Hotels in action](assets/Lab16InActionHotels.png)

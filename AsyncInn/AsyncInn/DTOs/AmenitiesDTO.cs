@@ -9,5 +9,10 @@ namespace AsyncInn.DTOs
     {
         public int ID { get; set; }
         public string Name { get; set; }
+
+        public IEnumerator<AmenitiesDTO> GetEnumerator()
+        {
+            return null;
+        }
     }
 }

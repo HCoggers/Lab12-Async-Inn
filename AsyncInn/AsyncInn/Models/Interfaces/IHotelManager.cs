@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsyncInn.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,8 +12,8 @@ namespace AsyncInn.Models.Interfaces
         public Task CreateHotel(Hotel hotel);
 
         // READ
-        public Task<Hotel> GetHotel(int id);
-        public Task<List<Hotel>> GetHotels();
+        public Task<HotelDTO> GetHotel(int id);
+        public Task<List<HotelDTO>> GetHotels();
 
         // UPDATE
         public Task UpdateHotel(Hotel hotel, int id);
@@ -21,6 +22,6 @@ namespace AsyncInn.Models.Interfaces
         public Task DeleteHotel(int id);
 
         // GET HOTEL ROOMS
-        public Task<List<HotelRoom>> GetHotelRooms(int hotelId);
+        public Task<List<HotelRoomDTO>> GetHotelRooms(int hotelId);
     }
 }
