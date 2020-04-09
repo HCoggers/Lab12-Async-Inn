@@ -1,4 +1,5 @@
 ﻿using AsyncInn.Data;
+using AsyncInn.DTOs;
 using AsyncInn.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -33,16 +34,66 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Room> GetRoom(int id)
+        public async Task<RoomDTO> GetRoom(int id)
         {
             var room = await _context.Rooms.FindAsync(id);
-            
-            return room;
+
+            var roomAmenities = await _amenities.GetAmenities(room.ID);
+            List<AmenitiesDTO> amenityDTOs = new List<AmenitiesDTO>();
+            if (roomAmenities != null)
+            {
+                foreach (var RoomAmenity in room.RoomAmenities)
+                {
+                    var AmenityDTO = new AmenitiesDTO
+                    {
+                        ID = RoomAmenity.AmenitiesID,
+                        Name = "TESTNAME"
+                    };
+                    amenityDTOs.Add(AmenityDTO);
+                }
+            }
+
+            RoomDTO roomDTO = new RoomDTO
+            {
+                ID = room.ID,
+                Name = room.Name,
+                Layout = room.Layout.ToString(),
+                Amenities = amenityDTOs
+            };
+                
+            return roomDTO;
         }
 
-        public async Task<List<Room>> GetRooms()
+        public async Task<List<RoomDTO>> GetRooms()
         {
-            return await _context.Rooms.ToListAsync();
+            var rooms = await _context.Rooms.ToListAsync();
+
+            List<RoomDTO> roomDTOs = new List<RoomDTO>();
+            foreach(var room in rooms)
+            {
+                List<AmenitiesDTO> amenityDTOs = new List<AmenitiesDTO>();
+                if (room.RoomAmenities != null)
+                {
+                    foreach (var RoomAmenity in room.RoomAmenities)
+                    {
+                        var AmenityDTO = new AmenitiesDTO
+                        {
+                            ID = RoomAmenity.AmenitiesID,
+                            Name = _context.Amenities.Find(RoomAmenity.AmenitiesID).Name
+                        };
+                        amenityDTOs.Add(AmenityDTO);
+                    }
+                }
+
+                roomDTOs.Add(new RoomDTO
+                {
+                    ID = room.ID,
+                    Name = room.Name,
+                    Layout = room.Layout.ToString(),
+                    Amenities = amenityDTOs
+                });
+            }
+            return roomDTOs;
         }
 
         public async Task UpdateRoom(Room room, int id)

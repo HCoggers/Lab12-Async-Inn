@@ -6,6 +6,9 @@
 An API Server developed for the Async Inn, which can return various information from a database of the Inn's locations, room layouts, and amenities. This API Server is still in development, and not readily available to the public, however, if you would like to test out our end points in the server's current state, simply clone this repo on to your local machine, and follow [these](#Directions) instructions:
 
 > *Server testing using Postman*
+#### Lab 17
+![Lab 17 Rooms in action (not working)](assets/Lab17InActionRooms.png)
+
 #### Lab 16
 ![Lab 16 Hotels in action](assets/Lab16InActionHotels.png)
 ![Lab 16 Rooms in action](assets/Lab16InActionRooms.png)

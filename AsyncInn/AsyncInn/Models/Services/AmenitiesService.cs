@@ -1,4 +1,5 @@
 ﻿using AsyncInn.Data;
+using AsyncInn.DTOs;
 using AsyncInn.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,15 +32,31 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Amenities> GetAmenities(int id)
+        public async Task<AmenitiesDTO> GetAmenities(int id)
         {
             var amenities = await _context.Amenities.FindAsync(id);
-            return amenities;
+
+            AmenitiesDTO amenitiesDTO = new AmenitiesDTO
+            {
+                ID = amenities.ID,
+                Name = amenities.Name
+            };
+
+            return amenitiesDTO;
         }
 
-        public async Task<List<Amenities>> GetAllAmenities()
+        public async Task<List<AmenitiesDTO>> GetAllAmenities()
         {
-            return await _context.Amenities.ToListAsync();
+            var amenities = await _context.Amenities.ToListAsync();
+            List<AmenitiesDTO> amenitiesDTOs = new List<AmenitiesDTO>();
+
+            foreach(var amenity in amenities)
+                amenitiesDTOs.Add(new AmenitiesDTO
+                {
+                    ID = amenity.ID,
+                    Name = amenity.Name
+                });
+            return amenitiesDTOs;
         }
 
         public async Task UpdateAmenities(Amenities amenities, int id)
