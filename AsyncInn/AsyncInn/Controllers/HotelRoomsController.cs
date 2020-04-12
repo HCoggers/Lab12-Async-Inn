@@ -12,7 +12,7 @@ using AsyncInn.DTOs;
 
 namespace AsyncInn.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/hotel/room")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -23,14 +23,14 @@ namespace AsyncInn.Controllers
             _hotelroom = hotelroom;
         }
 
-        // GET: api/HotelRooms
+        // GET: api/hotel/room
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
             return await _hotelroom.GetHotelRooms();
         }
 
-        // GET: api/HotelRooms/5
+        // GET: api/hotel/room/1/5
         [HttpGet("{hotelId}/{roomNumber}")]
         public async Task<ActionResult<HotelRoomDTO>> GetByRoomNumber(int hotelId, int roomNumber)
         {
@@ -44,34 +44,34 @@ namespace AsyncInn.Controllers
             return hotelRoom;
         }
 
-        // PUT: api/HotelRooms/5/4
+        // PUT: api/hotel/room/5/4
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{hotelId}/{roomNumber}")]
-        public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)
+        public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoomDTO hotelRoomDTO)
         {
-            if (hotelId != hotelRoom.HotelID || roomNumber != hotelRoom.RoomNumber)
+            if (hotelId != hotelRoomDTO.HotelID || roomNumber != hotelRoomDTO.RoomNumber)
             {
                 return BadRequest();
             }
 
-            await _hotelroom.UpdateHotelRoom(hotelRoom);
+            await _hotelroom.UpdateHotelRoom(hotelRoomDTO);
 
             return NoContent();
         }
 
-        // POST: api/HotelRooms
+        // POST: api/hotel/room/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
+        [HttpPost("{hotelId}")]
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int hotelId, HotelRoomDTO hotelRoomDTO)
         {
-            await _hotelroom.CreateHotelRoom(hotelRoom);
+            await _hotelroom.CreateHotelRoom(hotelRoomDTO);
 
-            return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.RoomNumber }, hotelRoom);
+            return CreatedAtAction("GetHotelRoom", new { id = hotelId });
         }
 
-        // DELETE: api/HotelRooms/5
+        // DELETE: api/hotel/room/1/3
         [HttpDelete("{hotelId}/{roomNumber}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelId, int roomNumber)
         {

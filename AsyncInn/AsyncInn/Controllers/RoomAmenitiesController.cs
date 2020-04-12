@@ -10,7 +10,7 @@ using AsyncInn.Models;
 
 namespace AsyncInn.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Room/Amenities")]
     [ApiController]
     public class RoomAmenitiesController : ControllerBase
     {
@@ -21,20 +21,20 @@ namespace AsyncInn.Controllers
             _context = context;
         }
 
-        // POST: api/RoomAmenities
+        // POST: api/Room/Amenities/5/2
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<RoomAmenities>> PostRoomAmenities(RoomAmenities roomAmenities)
+        [HttpPost("{roomId}/{amenitiesId}")]
+        public async Task<ActionResult<RoomAmenities>> PostRoomAmenities(int roomId, int amenitiesId)
         {
-            _context.RoomAmenities.Add(roomAmenities);
+            _context.RoomAmenities.Add(new RoomAmenities { RoomID = roomId, AmenitiesID = amenitiesId });
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (RoomAmenitiesExists(roomAmenities.AmenitiesID, roomAmenities.RoomID))
+                if (RoomAmenitiesExists(amenitiesId, roomId))
                 {
                     return Conflict();
                 }
@@ -44,7 +44,7 @@ namespace AsyncInn.Controllers
                 }
             }
 
-            return CreatedAtAction("GetRoomAmenities", new { id = roomAmenities.AmenitiesID }, roomAmenities);
+            return CreatedAtAction("GetRoomAmenities", new { AmenitiesID = amenitiesId, RoomID = roomId });
         }
 
         // DELETE: api/RoomAmenities/5
