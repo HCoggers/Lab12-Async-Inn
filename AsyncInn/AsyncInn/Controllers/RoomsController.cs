@@ -48,14 +48,14 @@ namespace AsyncInn.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, Room room)
+        public async Task<IActionResult> PutRoom(int id, RoomDTO roomDTO)
         {
-            if (id != room.ID)
+            if (id != roomDTO.ID)
             {
                 return BadRequest();
             }
 
-            await _room.UpdateRoom(room, id);
+            await _room.UpdateRoom(roomDTO, id);
 
             return NoContent();
         }
@@ -64,11 +64,11 @@ namespace AsyncInn.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
+        public async Task<ActionResult<Room>> PostRoom(RoomDTO roomDTO)
         {
-            await _room.CreateRoom(room);
+            await _room.CreateRoom(roomDTO);
 
-            return CreatedAtAction("GetRoom", new { id = room.ID }, room);
+            return CreatedAtAction("GetRoom", new { id = roomDTO.ID }, roomDTO);
         }
 
         // DELETE: api/Rooms/5

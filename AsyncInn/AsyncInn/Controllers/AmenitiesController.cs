@@ -48,14 +48,14 @@ namespace AsyncInn.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenities(int id, Amenities amenities)
+        public async Task<IActionResult> PutAmenities(int id, AmenitiesDTO amenitiesDTO)
         {
-            if (id != amenities.ID)
+            if (id != amenitiesDTO.ID)
             {
                 return BadRequest();
             }
 
-            await _amenities.UpdateAmenities(amenities, id);
+            await _amenities.UpdateAmenities(amenitiesDTO, id);
 
             return NoContent();
         }
@@ -64,11 +64,11 @@ namespace AsyncInn.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Amenities>> PostAmenities(Amenities amenities)
+        public async Task<ActionResult<Amenities>> PostAmenities(AmenitiesDTO amenitiesDTO)
         {
-            await _amenities.CreateAmenities(amenities);
+            await _amenities.CreateAmenities(amenitiesDTO);
 
-            return CreatedAtAction("GetAmenities", new { id = amenities.ID }, amenities);
+            return CreatedAtAction("GetAmenities", new { id = amenitiesDTO.ID }, amenitiesDTO);
         }
 
         // DELETE: api/Amenities/5

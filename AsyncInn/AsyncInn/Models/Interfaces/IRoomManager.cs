@@ -9,20 +9,17 @@ namespace AsyncInn.Models.Interfaces
     public interface IRoomManager
     {
         // CREATE
-        public Task CreateRoom(Room Room);
+        public Task CreateRoom(RoomDTO RoomDTO);
 
         // READ
         public Task<RoomDTO> GetRoom(int id);
         public Task<List<RoomDTO>> GetRooms();
 
         // UPDATE
-        public Task UpdateRoom(Room Room, int id);
+        public Task UpdateRoom(RoomDTO RoomDTO, int id);
 
         // DELETE
         public Task DeleteRoom(int id);
-
-        // GET ROOM AMENITIES
-        public Task<List<Amenities>> GetRoomAmenities(int roomId);
 
     }
 }

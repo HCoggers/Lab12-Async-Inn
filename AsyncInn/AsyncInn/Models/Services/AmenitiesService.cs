@@ -18,8 +18,9 @@ namespace AsyncInn.Models.Services
             _context = context;
         }
 
-        public async Task CreateAmenities(Amenities amenities)
+        public async Task CreateAmenities(AmenitiesDTO amenitiesDTO)
         {
+            Amenities amenities = await GetAmenitiesFromDTO(amenitiesDTO);
             _context.Amenities.Add(amenities);
             await _context.SaveChangesAsync();
         }
@@ -35,13 +36,7 @@ namespace AsyncInn.Models.Services
         public async Task<AmenitiesDTO> GetAmenities(int id)
         {
             var amenities = await _context.Amenities.FindAsync(id);
-
-            AmenitiesDTO amenitiesDTO = new AmenitiesDTO
-            {
-                ID = amenities.ID,
-                Name = amenities.Name
-            };
-
+            var amenitiesDTO = GetDTOFromAmenities(amenities);
             return amenitiesDTO;
         }
 
@@ -50,20 +45,46 @@ namespace AsyncInn.Models.Services
             var amenities = await _context.Amenities.ToListAsync();
             List<AmenitiesDTO> amenitiesDTOs = new List<AmenitiesDTO>();
 
-            foreach(var amenity in amenities)
-                amenitiesDTOs.Add(new AmenitiesDTO
-                {
-                    ID = amenity.ID,
-                    Name = amenity.Name
-                });
+            foreach (var amenity in amenities)
+            {
+                var amenitiesDTO = GetDTOFromAmenities(amenity);
+                amenitiesDTOs.Add(amenitiesDTO);
+            }
             return amenitiesDTOs;
         }
 
-        public async Task UpdateAmenities(Amenities amenities, int id)
+        public async Task UpdateAmenities(AmenitiesDTO amenitiesDTO, int id)
         {
+            Amenities amenities = await GetAmenitiesFromDTO(amenitiesDTO);
             _context.Amenities.Update(amenities);
 
             await _context.SaveChangesAsync();
+        }
+
+        private async Task<Amenities> GetAmenitiesFromDTO(AmenitiesDTO amenitiesDTO)
+        {
+            List<RoomAmenities> roomAmenities = await _context.RoomAmenities.Where(roomAmenities => roomAmenities.AmenitiesID == amenitiesDTO.ID)
+                .ToListAsync();
+
+            Amenities amenities = new Amenities
+            {
+                ID = amenitiesDTO.ID,
+                Name = amenitiesDTO.Name,
+                RoomAmenities = roomAmenities
+            };
+
+            return amenities;
+        }
+
+        private AmenitiesDTO GetDTOFromAmenities(Amenities amenities)
+        {
+            AmenitiesDTO amenitiesDTO = new AmenitiesDTO
+            {
+                ID = amenities.ID,
+                Name = amenities.Name
+            };
+
+            return amenitiesDTO;
         }
     }
 }
