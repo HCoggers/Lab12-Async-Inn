@@ -35,7 +35,7 @@ namespace AsyncInn
         {
             services.AddMvc();
 
-            services.AddDbContext<AsyncInnDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AsyncInnDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
