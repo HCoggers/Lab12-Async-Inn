@@ -16,6 +16,10 @@ namespace AsyncInn.Controllers
     {
         private readonly AsyncInnDbContext _context;
 
+        /// <summary>
+        /// Room amenities controller constructor
+        /// </summary>
+        /// <param name="context">database context injected</param>
         public RoomAmenitiesController(AsyncInnDbContext context)
         {
             _context = context;
@@ -24,6 +28,12 @@ namespace AsyncInn.Controllers
         // POST: api/Room/Amenities/5/2
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// create new room amenity connection
+        /// </summary>
+        /// <param name="roomId">id of room to add amenity to</param>
+        /// <param name="amenitiesId">id of amenity to add to room</param>
+        /// <returns></returns>
         [HttpPost("{roomId}/{amenitiesId}")]
         public async Task<ActionResult<RoomAmenities>> PostRoomAmenities(int roomId, int amenitiesId)
         {
@@ -48,6 +58,11 @@ namespace AsyncInn.Controllers
         }
 
         // DELETE: api/RoomAmenities/5
+        /// <summary>
+        /// delete a given room amenity connection
+        /// </summary>
+        /// <param name="id">id of entry to be removed</param>
+        /// <returns>connection removed</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<RoomAmenities>> DeleteRoomAmenities(int id)
         {
@@ -63,6 +78,12 @@ namespace AsyncInn.Controllers
             return roomAmenities;
         }
 
+        /// <summary>
+        /// check if room amenity connection exists
+        /// </summary>
+        /// <param name="amenitiesId">id of amenity to check</param>
+        /// <param name="roomId">id of room to check</param>
+        /// <returns>boolean</returns>
         private bool RoomAmenitiesExists(int amenitiesId, int roomId)
         {
             return _context.RoomAmenities.Any(e => e.AmenitiesID == amenitiesId && e.RoomID == roomId);
