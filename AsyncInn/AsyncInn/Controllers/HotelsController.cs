@@ -18,12 +18,20 @@ namespace AsyncInn.Controllers
     {
         private readonly IHotelManager _hotel;
 
+        /// <summary>
+        /// hotel constructor
+        /// </summary>
+        /// <param name="hotel">injection of hotel interface</param>
         public HotelsController(IHotelManager hotel)
         {
             _hotel = hotel;
         }
 
         // GET: api/Hotels
+        /// <summary>
+        /// Get all hotels in database
+        /// </summary>
+        /// <returns>List of all hotels</returns>
         [HttpGet]
         public async Task<IEnumerable<HotelDTO>> GetHotels()
         {
@@ -31,6 +39,11 @@ namespace AsyncInn.Controllers
         }
 
         // GET: api/Hotels/5
+        /// <summary>
+        /// Get single hotel by id
+        /// </summary>
+        /// <param name="id">ID of hotel to return</param>
+        /// <returns>DTO version of Hotel entry</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
@@ -47,6 +60,12 @@ namespace AsyncInn.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// update particular hotel by id
+        /// </summary>
+        /// <param name="id">id of hotel to update</param>
+        /// <param name="hotel">DTO version of updated hotel</param>
+        /// <returns>no content</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHotel(int id, Hotel hotel)
         {
@@ -63,6 +82,11 @@ namespace AsyncInn.Controllers
         // POST: api/Hotels
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Create new hotel data entry from DTO version
+        /// </summary>
+        /// <param name="hotel">new hotel to be created</param>
+        /// <returns>success status code</returns>
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
         {
@@ -72,6 +96,11 @@ namespace AsyncInn.Controllers
         }
 
         // DELETE: api/Hotels/5
+        /// <summary>
+        /// delete a specific hotel entry by id
+        /// </summary>
+        /// <param name="id">ID of hotel to be deleted</param>
+        /// <returns>no content</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Hotel>> DeleteHotel(int id)
         {

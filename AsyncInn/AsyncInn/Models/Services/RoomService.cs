@@ -14,12 +14,22 @@ namespace AsyncInn.Models.Services
         private readonly AsyncInnDbContext _context;
         private readonly IAmenitiesManager _amenities;
 
+        /// <summary>
+        /// room service constructor
+        /// </summary>
+        /// <param name="context">injects DBContext</param>
+        /// <param name="amenities">injects amenities interface dependency</param>
         public RoomService(AsyncInnDbContext context, IAmenitiesManager amenities)
         {
             _context = context;
             _amenities = amenities;
         }
 
+        /// <summary>
+        /// create a new room type
+        /// </summary>
+        /// <param name="roomDTO">DTO version of new room</param>
+        /// <returns>no content</returns>
         public async Task CreateRoom(RoomDTO roomDTO)
         {
             Room room = await GetRoomFromDTO(roomDTO);
@@ -27,6 +37,11 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// delete specific room type
+        /// </summary>
+        /// <param name="id">id of room to be deleted</param>
+        /// <returns>no content</returns>
         public async Task DeleteRoom(int id)
         {
             var toDelete = await _context.Rooms.FindAsync(id);
@@ -35,6 +50,11 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// get a specific room by id
+        /// </summary>
+        /// <param name="id">id of room</param>
+        /// <returns>room as a dTO</returns>
         public async Task<RoomDTO> GetRoom(int id)
         {
             var room = await _context.Rooms.FindAsync(id);
@@ -42,6 +62,10 @@ namespace AsyncInn.Models.Services
             return roomDTO;
         }
 
+        /// <summary>
+        /// get all room types in database
+        /// </summary>
+        /// <returns>list of all rooms as DTOs</returns>
         public async Task<List<RoomDTO>> GetRooms()
         {
             var rooms = await _context.Rooms.ToListAsync();
@@ -55,6 +79,12 @@ namespace AsyncInn.Models.Services
             return roomDTOs;
         }
 
+        /// <summary>
+        /// update specific room type
+        /// </summary>
+        /// <param name="roomDTO">DTO of updated room</param>
+        /// <param name="id">id of room to be updated</param>
+        /// <returns>no content</returns>
         public async Task UpdateRoom(RoomDTO roomDTO, int id)
         {
             Room room = await GetRoomFromDTO(roomDTO);
@@ -64,6 +94,11 @@ namespace AsyncInn.Models.Services
         }
 
         // SATELLITE METHODS
+        /// <summary>
+        /// get all amenities for a particular room
+        /// </summary>
+        /// <param name="roomId">id of room</param>
+        /// <returns>list of amenities</returns>
         private async Task<List<Amenities>> GetRoomAmenities(int roomId)
         {
             var roomAmenities = await _context.RoomAmenities.Where(roomAmenity => roomAmenity.RoomID == roomId)
@@ -73,6 +108,11 @@ namespace AsyncInn.Models.Services
             return roomAmenities;
         }
 
+        /// <summary>
+        /// convert DTO to room instance
+        /// </summary>
+        /// <param name="roomDTO">DTO to be converted</param>
+        /// <returns>room instance</returns>
         private async Task<Room> GetRoomFromDTO(RoomDTO roomDTO) 
         {
             var roomAmenities = await _context.RoomAmenities.Where(roomAmenity => roomAmenity.RoomID == roomDTO.ID)
@@ -92,6 +132,11 @@ namespace AsyncInn.Models.Services
             return room;
         }
 
+        /// <summary>
+        /// convert room instance to a DTO
+        /// </summary>
+        /// <param name="room">instance to be converted</param>
+        /// <returns>DTO of room</returns>
         private async Task<RoomDTO> GetDTOFromRoom(Room room)
         {
             var roomAmenities = await GetRoomAmenities(room.ID);

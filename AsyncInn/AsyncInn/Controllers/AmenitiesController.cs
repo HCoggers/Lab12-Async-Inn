@@ -18,12 +18,20 @@ namespace AsyncInn.Controllers
     {
         private readonly IAmenitiesManager _amenities;
 
+        /// <summary>
+        /// AmenitiesController constructor
+        /// </summary>
+        /// <param name="amenities">inject amenenities interface dependency</param>
         public AmenitiesController(IAmenitiesManager amenities)
         {
             _amenities = amenities;
         }
 
         // GET: api/Amenities
+        /// <summary>
+        /// Gets a list of all amenities
+        /// </summary>
+        /// <returns>List of amenity DTOs</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AmenitiesDTO>>> GetAmenities()
         {
@@ -31,6 +39,11 @@ namespace AsyncInn.Controllers
         }
 
         // GET: api/Amenities/5
+        /// <summary>
+        /// Get a single amenity by id
+        /// </summary>
+        /// <param name="id">Id of amenity to return</param>
+        /// <returns>Amenity that matches given ID</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<AmenitiesDTO>> GetAmenities(int id)
         {
@@ -47,6 +60,12 @@ namespace AsyncInn.Controllers
         // PUT: api/Amenities/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Update an amenity of a given id
+        /// </summary>
+        /// <param name="id">Id of amenity to update</param>
+        /// <param name="amenitiesDTO">Updated DTO version of amenity</param>
+        /// <returns>no content</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAmenities(int id, AmenitiesDTO amenitiesDTO)
         {
@@ -63,6 +82,11 @@ namespace AsyncInn.Controllers
         // POST: api/Amenities
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Create a brand new amenity from a given DTO
+        /// </summary>
+        /// <param name="amenitiesDTO">Amenity to be created</param>
+        /// <returns>Success status code</returns>
         [HttpPost]
         public async Task<ActionResult<Amenities>> PostAmenities(AmenitiesDTO amenitiesDTO)
         {
@@ -72,6 +96,11 @@ namespace AsyncInn.Controllers
         }
 
         // DELETE: api/Amenities/5
+        /// <summary>
+        /// Delete amenity of a given ID
+        /// </summary>
+        /// <param name="id">ID of amenity to delete</param>
+        /// <returns>no content</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
         {

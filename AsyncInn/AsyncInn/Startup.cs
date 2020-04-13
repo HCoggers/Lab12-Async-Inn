@@ -60,7 +60,7 @@ namespace AsyncInn
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{ controller = Home }/{ action = Index }/{id?}/{id2?}");
+                endpoints.MapControllerRoute("default", "{ controller = Home }/{ action = Index }/{id?}");
             });
         }
     }

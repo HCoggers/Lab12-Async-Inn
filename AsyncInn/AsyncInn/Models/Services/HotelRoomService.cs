@@ -13,12 +13,22 @@ namespace AsyncInn.Models.Services
     {
         private readonly AsyncInnDbContext _context;
         private readonly IRoomManager _room;
+        /// <summary>
+        /// hotel room service constructor
+        /// </summary>
+        /// <param name="context">injects DBContext</param>
+        /// <param name="room">injects room interface dependency</param>
         public HotelRoomService(AsyncInnDbContext context, IRoomManager room)
         {
             _context = context;
             _room = room;
         }
 
+        /// <summary>
+        /// create a new hotel room
+        /// </summary>
+        /// <param name="hotelRoomDTO">DTO of ne hotel instance</param>
+        /// <returns>no content</returns>
         public async Task CreateHotelRoom(HotelRoomDTO hotelRoomDTO)
         {
             var hotelRoom = await GetHotelRoomFromDTO(hotelRoomDTO);
@@ -26,6 +36,12 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// delete hotel room entry by hotel id and room number
+        /// </summary>
+        /// <param name="hotelId">entry's hotel id</param>
+        /// <param name="roomNumber">entry's room number</param>
+        /// <returns>no content</returns>
         public async Task DeleteHotelRoom(int hotelId, int roomNumber)
         {
             var toDelete = await _context.HotelRooms.FindAsync(roomNumber, hotelId);
@@ -34,6 +50,12 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// get specific hotel room
+        /// </summary>
+        /// <param name="hotelId">id of hotel</param>
+        /// <param name="roomNumber">room number</param>
+        /// <returns>hotel room as a DTO</returns>
         public async Task<HotelRoomDTO> GetByRoomNumber(int hotelId, int roomNumber)
         {
             var hotelRoom = await _context.HotelRooms.FindAsync(roomNumber, hotelId);
@@ -43,6 +65,10 @@ namespace AsyncInn.Models.Services
             return hotelRoomDTO;
         }
 
+        /// <summary>
+        /// return all hotel rooms
+        /// </summary>
+        /// <returns>all hotel room entries as DTOs</returns>
         public async Task<List<HotelRoomDTO>> GetHotelRooms()
         {
             var hotelRooms = await _context.HotelRooms.ToListAsync();
@@ -56,6 +82,11 @@ namespace AsyncInn.Models.Services
             return hotelRoomDTOs;
         }
 
+        /// <summary>
+        /// update hotel room
+        /// </summary>
+        /// <param name="hotelRoomDTO">DTO of hotel room to be updated</param>
+        /// <returns>no content</returns>
         public async Task UpdateHotelRoom(HotelRoomDTO hotelRoomDTO)
         {
             HotelRoom hotelRoom = await GetHotelRoomFromDTO(hotelRoomDTO);
@@ -65,6 +96,11 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// get all hotel rooms of a specific hotel
+        /// </summary>
+        /// <param name="hotelId">id of hotel</param>
+        /// <returns>list of hotel rooms as DTOs</returns>
         public async Task<List<HotelRoom>> GetHotelRoomsByHotelID(int hotelId)
         {
             var hotelRooms = await _context.HotelRooms.Where(hotelRoom => hotelRoom.HotelID == hotelId)
@@ -74,6 +110,11 @@ namespace AsyncInn.Models.Services
         }
 
         // SATELLITE METHODS
+        /// <summary>
+        /// create hotel room entry from DTO
+        /// </summary>
+        /// <param name="hotelRoomDTO">DTO to be converted</param>
+        /// <returns>hotel room instance</returns>
         private async Task<HotelRoom> GetHotelRoomFromDTO(HotelRoomDTO hotelRoomDTO)
         {
             Hotel hotel = await _context.Hotels.FindAsync(hotelRoomDTO.HotelID);
@@ -93,6 +134,11 @@ namespace AsyncInn.Models.Services
             return hotelRoom;
         }
 
+        /// <summary>
+        /// converts hotel room instance to DTO
+        /// </summary>
+        /// <param name="hotelRoom">instance to be converted</param>
+        /// <returns>DTO of hotel room</returns>
         private async Task<HotelRoomDTO> GetDTOFromHotelRoom(HotelRoom hotelRoom)
         {
             var roomDTO = await _room.GetRoom(hotelRoom.RoomID);
